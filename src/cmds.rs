@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 
-pub fn builtins() -> HashMap<&'static str, fn(&Vec<&str>)> {
-    let mut builtin_commands: HashMap<&str, fn(&Vec<&str>)> = HashMap::new();
+use crate::cmd_hashmap;
 
-    builtin_commands.insert("cd", |args| {
+pub fn builtins() -> HashMap<&'static str, fn(&Vec<&str>)> {
+    let builtin_commands: HashMap<&str, fn(&Vec<&str>)> = cmd_hashmap!("cd" => |args| {
         if args.len() == 1 {
             let home = std::env::var("HOME").unwrap();
             if let Err(e) = std::env::set_current_dir(home) {
@@ -15,21 +15,15 @@ pub fn builtins() -> HashMap<&'static str, fn(&Vec<&str>)> {
                 println!("cd: {}", e);
             }
         }
-    });
-
-    builtin_commands.insert("exit", |args| {
+    }, "exit" => |args| {
         if args.len() == 1 {
             std::process::exit(0);
         }
 
         std::process::exit(args[1].parse().unwrap());
-    });
-
-    builtin_commands.insert("?", |_| {
+    }, "?" => |_| {
         println!("This is a simple shell written in Rust");
-    });
-
-    builtin_commands.insert("clear", |_| {
+    }, "clear" => |_| {
         print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
     });
 

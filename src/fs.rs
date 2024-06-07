@@ -1,4 +1,4 @@
-use crate::{config::Config, hashmap};
+use crate::{config::Config, alias_hashmap};
 
 pub fn load_config_str() -> String {
     let config_dir = dirs::config_dir().unwrap();
@@ -11,9 +11,9 @@ pub fn load_config_str() -> String {
 
     if !config_file.exists() {
         let default_config = Config {
-            aliases: hashmap!("ll" => "ls -l", "la" => "ls -a"),
+            aliases: alias_hashmap!("ll" => "ls -l", "la" => "ls -a"),
             paths: vec![],
-            env_vars: hashmap!("EDITOR" => "vim"),
+            env_vars: alias_hashmap!("EDITOR" => "vim"),
         };
 
         let default_config =
