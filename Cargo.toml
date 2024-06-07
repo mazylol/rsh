@@ -1,0 +1,9 @@
+[package]
+name = "rsh"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+colored = "2.1.0"
+whoami = "1.5.1"
