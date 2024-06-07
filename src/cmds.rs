@@ -19,7 +19,7 @@ pub fn builtins() -> HashMap<&'static str, fn(&Vec<&str>)> {
 
     builtin_commands.insert("exit", |args| {
         if args.len() == 1 {
-                std::process::exit(0);
+            std::process::exit(0);
         }
 
         std::process::exit(args[1].parse().unwrap());
@@ -27,6 +27,10 @@ pub fn builtins() -> HashMap<&'static str, fn(&Vec<&str>)> {
 
     builtin_commands.insert("?", |_| {
         println!("This is a simple shell written in Rust");
+    });
+
+    builtin_commands.insert("clear", |_| {
+        print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
     });
 
     builtin_commands
